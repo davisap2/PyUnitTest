@@ -112,6 +112,8 @@ class UnitTest:
                 self.beforeEach(classObj, methodList)
                 self.runMethod(classObj, method) # runs current test
                 self.afterEach(classObj, methodList)
+                
+            self.afterClass(classObj, methodList)
         
     def beforeClass(self, classObj, methodList):
         for method in methodList['setup']:
@@ -126,6 +128,11 @@ class UnitTest:
     def afterEach(self, classObj, methodList):
         for method in methodList['teardown']:
             if method != 'afterClass':
+                self.runMethod(classObj, method)
+                
+    def afterClass(self, classObj, methodList):
+        for method in methodList['teardown']:
+            if method == 'afterClass':
                 self.runMethod(classObj, method)
                 
         
