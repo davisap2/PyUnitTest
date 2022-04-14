@@ -32,18 +32,6 @@ def getFunctions(body):
                 setupFunctions.append(method.name)
             elif (method.name[:5] == 'after'):
                 teardownFunctions.append(method.name)
-    """
-    for f in body:
-       #print(f)
-        if (isinstance(f, ast.FunctionDef)):
-            print("This is a function")
-            if (f.name[:4] == "test"):
-                testFunctions.append(f.name)
-            elif (f.name[:6] == 'before'):
-                setupFunctions.append(f.name)
-            elif (f.name[:5] == 'after'):
-                teardownFunctions.append(f.name)
-    """
     
     functions = {
         "setup": setupFunctions,

@@ -5,23 +5,21 @@ Created on Sat Mar 26 15:41:27 2022
 @author: Austin Davis
 """
 import os, sys
+import inspect
 
 from pyunitast.ast import parseAST
 import tests.test1
 
 class UnitTest:
-    def __init__(self, className):
+    
+    def __init__(self):
         self.filepath = sys.argv[0] # filepath of test suite
-        self.className = className
+        #self.className = className
         self.functions = parseAST(self.filepath)
+        self.classList = []
         
-        print('CLASSNAME: ',self.className)
+        #print('CLASSNAME: ',self.className)
         #self.testClass = importModule.MyClass()
-    def printFilepath(self):
-        print(self.filepath)
-        
-    def printFunctions(self):
-        print(self.functions)
         
     def runMethod(self, methodName):
         #run the given method here
@@ -29,6 +27,9 @@ class UnitTest:
         eval(methodName+'()')
         
     def importClasses(self):
+        """
+        This function will import all classes from all test files located in the tests folder.
+        """
         testPath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tests\\') # directory of test suites
         print("path: ", testPath)
         print("__name__: ", __name__)
@@ -47,17 +48,26 @@ class UnitTest:
                     print("x: ", x)
             
             classes = [getattr(mod, x) for x in dir(mod) if isinstance(getattr(mod, x), type)]
+            self.classList.append(classes) #adding this class to list of all classes
             print("classes: ", classes)
             for cls in classes:
-                print("a cls")
+                print("cls: ", cls)
                 setattr(sys.modules[__name__], cls.__name__, cls)
         
+        print('CLASSLIST: ', self.classList)
+        
+        """
+        for cls in self.classList:
+            #print(cls[0].__name__)
+            print(cls, ': ', inspect.getfile(cls[0]))
+        """
         
     def runTests(self):
         setupFunctions = self.functions['setup']
         teardownFunctions = self.functions['teardown']
         testFunctions = self.functions['test']
         
+        #import classes from test suite files
         self.importClasses()
         
         #beforeClass(setupFunctions)
@@ -71,6 +81,28 @@ class UnitTest:
             
         
         #afterClass(teardownFunctions)
+        
+    def getMethods(self, cls):
+        """
+        This function will get all the methods of the given class via AST parsing, then return them in a list.
+        """
+        print(cls, ': ', inspect.getfile(cls))
+        thisFilepath = inspect.getfile(cls)
+        methods = parseAST(thisFilepath)
+        print('THESEMETHODS: ', methods)
+        return methods
+            
+    def runAllTestSuites(self):
+        self.importClasses()
+        
+        for cls in self.classList:
+            methodList = self.getMethods(cls[0])
+        
+#testObj = new UnitTest()
+
+        
+            
+
     
 
         

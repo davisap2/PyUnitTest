@@ -26,10 +26,9 @@ class FirstTestClass:
         print("This function should run after all test functions have run")
     
 testClass = FirstTestClass()    
-testObj = UnitTest(testClass.className)
-testObj.printFilepath()
-testObj.printFunctions()
-testObj.runTests()
+testObj = UnitTest()
+#testObj.runTests()
+testObj.runAllTestSuites()
 
 
 
