@@ -12,7 +12,7 @@ class TestSuiteOne:
         print("This function should run once before any other function")
     
     def beforeEach():
-        print("This functions should run before each test function")
+        print("This function should run before each test function")
         
     def testFunc():
         print("This is a test function")

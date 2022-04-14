@@ -107,12 +107,19 @@ class UnitTest:
             methodList = self.getMethods(cls[0])
             
             self.beforeClass(classObj, methodList)
+            
+            for method in methodList['test']: #runs once for each test in the list
+                self.beforeEach(classObj, methodList)
         
     def beforeClass(self, classObj, methodList):
         for method in methodList['setup']:
             if method == 'beforeClass':
                 self.runMethod(classObj, method)
             
+    def beforeEach(self, classObj, methodList):
+        for method in methodList['setup']:
+            if method != 'beforeClass':
+                self.runMethod(classObj, method)
 
         
             
