@@ -18,6 +18,9 @@ class TestSuiteOne:
         
     def testFunc():
         print("This is a test function")
+        a = 1
+        b = 2
+        return assertEquals(a,b)
         
     def afterEach():
         print("This function should run after each test function")

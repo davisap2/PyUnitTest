@@ -8,7 +8,6 @@ import os, sys
 import inspect
 
 from pyunitast.ast import parseAST
-import tests.test1
 
 class UnitTest:
     
@@ -24,7 +23,7 @@ class UnitTest:
     def runMethod(self, classObj, methodName):
         #run the given method here
         print("method Name: ", methodName+'()')
-        eval('classObj.'+methodName+'()')
+        return eval('classObj.'+methodName+'()')
         
     def importClasses(self):
         """
@@ -51,12 +50,12 @@ class UnitTest:
             
             classes = [getattr(mod, x) for x in dir(mod) if isinstance(getattr(mod, x), type)]
             self.classList.append(classes) #adding this class to list of all classes
-            print("classes: ", classes)
+            print("classes imported: ", classes)
             for cls in classes:
-                print("cls: ", cls)
+                #print("cls: ", cls)
                 setattr(sys.modules[__name__], cls.__name__, cls)
         
-        print('CLASSLIST: ', self.classList)
+        #print('CLASSLIST: ', self.classList)
         
         """
         for cls in self.classList:
@@ -88,10 +87,10 @@ class UnitTest:
         """
         This function will get all the methods of the given class via AST parsing, then return them in a list.
         """
-        print(cls, ': ', inspect.getfile(cls))
+        #print(cls, ': ', inspect.getfile(cls))
         thisFilepath = inspect.getfile(cls)
         methods = parseAST(thisFilepath)
-        print('THESEMETHODS: ', methods)
+        print('Class methods: ', methods)
         return methods
             
     def runAllTestSuites(self):
@@ -100,20 +99,25 @@ class UnitTest:
         """
         self.importClasses()
         
+        results = {}
+        
         for cls in self.classList:
-            print('CURRENT CLASS NAME: ', cls[0].__name__)
+            print('Class being tested: ', cls[0].__name__)
             className = cls[0].__name__
             classObj = globals()[className] # creates an instance of the given class
             methodList = self.getMethods(cls[0])
+            results[className] = {}
             
             self.beforeClass(classObj, methodList)
             
             for method in methodList['test']: #runs once for each test in the list
+                results[className][method] = {}
                 self.beforeEach(classObj, methodList)
-                self.runMethod(classObj, method) # runs current test
+                results[className][method]['result'] = self.runMethod(classObj, method) # runs current test
                 self.afterEach(classObj, methodList)
                 
             self.afterClass(classObj, methodList)
+            print('RESULTS: ', results)
         
     def beforeClass(self, classObj, methodList):
         for method in methodList['setup']:

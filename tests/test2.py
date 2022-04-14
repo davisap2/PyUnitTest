@@ -20,10 +20,8 @@ class TestSuiteTwo:
         print("This is a test function")
         a = 2
         b = 2
-        if assertEquals(a, b) == True:
-            print('SUCCESS')
-        else:
-            print('FAILED')
+        print('RESULT: ', assertEquals(a,b))
+        return assertEquals(a, b)
         
     def afterEach():
         print("This function should run after each test function")
