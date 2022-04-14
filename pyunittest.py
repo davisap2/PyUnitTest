@@ -21,31 +21,33 @@ class UnitTest:
         #print('CLASSNAME: ',self.className)
         #self.testClass = importModule.MyClass()
         
-    def runMethod(self, methodName):
+    def runMethod(self, classObj, methodName):
         #run the given method here
         print("method Name: ", methodName+'()')
-        eval(methodName+'()')
+        eval('classObj.'+methodName+'()')
         
     def importClasses(self):
         """
         This function will import all classes from all test files located in the tests folder.
         """
         testPath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tests\\') # directory of test suites
-        print("path: ", testPath)
-        print("__name__: ", __name__)
+        #print("path: ", testPath)
+        #print("__name__: ", __name__)
         
         # for each file in the tests folder, import the class inside them
         for py in [f[:-3] for f in os.listdir(testPath) if f.endswith('.py') and f != '__init__.py']:
-            print("py: ", py)
+            #print("py: ", py)
             #mod = __import__('.'.join([__name__, py]), fromlist=[py])
             
             #mod = __import__('tests.'+py)
             mod = __import__('.'.join(['tests', py]), fromlist=[py])
             print("imported ", 'tests.'+py)
             
+            """
             for x in dir(mod):
                 if isinstance(getattr(mod, x), type):
                     print("x: ", x)
+            """
             
             classes = [getattr(mod, x) for x in dir(mod) if isinstance(getattr(mod, x), type)]
             self.classList.append(classes) #adding this class to list of all classes
@@ -93,12 +95,24 @@ class UnitTest:
         return methods
             
     def runAllTestSuites(self):
+        """
+        This method will run every test suite found in the tests folder.
+        """
         self.importClasses()
         
         for cls in self.classList:
+            print('CURRENT CLASS NAME: ', cls[0].__name__)
+            className = cls[0].__name__
+            classObj = globals()[className] # creates an instance of the given class
             methodList = self.getMethods(cls[0])
+            
+            self.beforeClass(classObj, methodList)
         
-#testObj = new UnitTest()
+    def beforeClass(self, classObj, methodList):
+        for method in methodList['setup']:
+            if method == 'beforeClass':
+                self.runMethod(classObj, method)
+            
 
         
             
