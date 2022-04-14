@@ -118,6 +118,7 @@ class UnitTest:
                 
             self.afterClass(classObj, methodList)
             print('RESULTS: ', results)
+            self.printResults(results)
         
     def beforeClass(self, classObj, methodList):
         for method in methodList['setup']:
@@ -139,6 +140,13 @@ class UnitTest:
             if method == 'afterClass':
                 self.runMethod(classObj, method)
                 
+    def printResults(self, results):
+        print('\nTEST RESULTS:')
+        for cls in results:
+            print('CLASS: ', cls)
+            for method in results[cls]:
+                result = results[cls][method]['result']
+                print('\tMETHOD: ', method, ': ', result)
         
 
         

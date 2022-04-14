@@ -16,11 +16,16 @@ class TestSuiteOne:
     def beforeEach():
         print("This function should run before each test function")
         
-    def testFunc():
-        print("This is a test function")
+    def testFalseAssertEquals():
         a = 1
         b = 2
         return assertEquals(a,b)
+    
+    def testTrueAssertEquals():
+        a = 2
+        b = 2
+        return assertEquals(a,b)
+    
         
     def afterEach():
         print("This function should run after each test function")
