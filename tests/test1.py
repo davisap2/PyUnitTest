@@ -5,6 +5,8 @@ Created on Mon Apr  4 23:21:23 2022
 @author: Austin Davis
 """
 
+from assertions.assertions import assertEquals
+
 class TestSuiteOne:
     def __init__(self):
         self.className = self.__class__.__name__
