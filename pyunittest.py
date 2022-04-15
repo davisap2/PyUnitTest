@@ -117,8 +117,8 @@ class UnitTest:
                 self.afterEach(classObj, methodList)
                 
             self.afterClass(classObj, methodList)
-            print('RESULTS: ', results)
-            self.printResults(results)
+        print('RESULTS: ', results)
+        self.printResults(results)
         
     def beforeClass(self, classObj, methodList):
         for method in methodList['setup']:
