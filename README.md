@@ -11,5 +11,3 @@ Test suite file names can be named anything you would like. Test suite files mus
 All setup method names must start with "before." BeforeClass methods must be named beforeClass.
 All teardown methods must start with "after." AfterClass methods must be named afterClass.
 All test methods must start with "test."
-
->>>>>>> a532936ca1d37c4cba1016393f63cb15022aba50
