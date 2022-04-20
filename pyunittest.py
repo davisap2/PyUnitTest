@@ -12,15 +12,18 @@ from pyunitast.ast import parseAST
 class UnitTest:
     
     def __init__(self):
-        self.filepath = sys.argv[0] # filepath of test suite
+        #self.filepath = sys.argv[0] # filepath of test suite
         #self.className = className
-        self.functions = parseAST(self.filepath)
+        #self.functions = parseAST(self.filepath)
         self.classList = []
         
         #print('CLASSNAME: ',self.className)
         #self.testClass = importModule.MyClass()
         
     def runMethod(self, classObj, methodName):
+        """
+        Given a class and a method, this method will dynamically run the method given to it.
+        """
         #run the given method here
         print("method Name: ", methodName+'()')
         return eval('classObj.'+methodName+'()')
@@ -62,7 +65,8 @@ class UnitTest:
             #print(cls[0].__name__)
             print(cls, ': ', inspect.getfile(cls[0]))
         """
-        
+   
+    """     
     def runTests(self):
         setupFunctions = self.functions['setup']
         teardownFunctions = self.functions['teardown']
@@ -78,11 +82,11 @@ class UnitTest:
             #beforeEach()
             #passOrFail = runMethod(test)
             #self.runMethod(test)
-            
+    
             
         
         #afterClass(teardownFunctions)
-        
+       """ 
     def getMethods(self, cls):
         """
         This function will get all the methods of the given class via AST parsing, then return them in a list.
